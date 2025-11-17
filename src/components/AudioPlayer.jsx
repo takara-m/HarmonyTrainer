@@ -5,6 +5,9 @@ function AudioPlayer({ audioUrl, title }) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [currentTime, setCurrentTime] = useState(0)
   const [duration, setDuration] = useState(0)
+  const [volume, setVolume] = useState(1)
+  const [isMuted, setIsMuted] = useState(false)
+  const [previousVolume, setPreviousVolume] = useState(1)
   const audioRef = useRef(null)
 
   useEffect(() => {
@@ -36,6 +39,21 @@ function AudioPlayer({ audioUrl, title }) {
     }
   }, [audioUrl])
 
+  useEffect(() => {
+    const savedVolume = localStorage.getItem('audioPlayerVolume')
+    if (savedVolume !== null) {
+      const vol = parseFloat(savedVolume)
+      setVolume(vol)
+      if (audioRef.current) {
+        audioRef.current.volume = vol
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    localStorage.setItem('audioPlayerVolume', volume.toString())
+  }, [volume])
+
   const togglePlayPause = () => {
     const audio = audioRef.current
     if (!audio) return
@@ -55,6 +73,41 @@ function AudioPlayer({ audioUrl, title }) {
     const newTime = parseFloat(e.target.value)
     audio.currentTime = newTime
     setCurrentTime(newTime)
+  }
+
+  const handleVolumeChange = (e) => {
+    const newVolume = parseFloat(e.target.value)
+    setVolume(newVolume)
+    if (audioRef.current) {
+      audioRef.current.volume = newVolume
+    }
+    if (newVolume > 0 && isMuted) {
+      setIsMuted(false)
+    }
+  }
+
+  const toggleMute = () => {
+    if (isMuted) {
+      setVolume(previousVolume)
+      if (audioRef.current) {
+        audioRef.current.volume = previousVolume
+      }
+      setIsMuted(false)
+    } else {
+      setPreviousVolume(volume)
+      setVolume(0)
+      if (audioRef.current) {
+        audioRef.current.volume = 0
+      }
+      setIsMuted(true)
+    }
+  }
+
+  const getVolumeIcon = () => {
+    if (isMuted || volume === 0) return '🔇'
+    if (volume < 0.3) return '🔈'
+    if (volume < 0.7) return '🔉'
+    return '🔊'
   }
 
   const formatTime = (seconds) => {
@@ -89,6 +142,26 @@ function AudioPlayer({ audioUrl, title }) {
             <span className={styles.time}>{formatTime(currentTime)}</span>
             <span className={styles.timeSeparator}>/</span>
             <span className={styles.time}>{formatTime(duration)}</span>
+          </div>
+
+          <div className={styles.volumeControls}>
+            <button
+              className={styles.muteButton}
+              onClick={toggleMute}
+              aria-label={isMuted ? 'ミュート解除' : 'ミュート'}
+            >
+              {getVolumeIcon()}
+            </button>
+            <input
+              type="range"
+              className={styles.volumeSlider}
+              min="0"
+              max="1"
+              value={volume}
+              onChange={handleVolumeChange}
+              step="0.01"
+              aria-label="音量"
+            />
           </div>
 
           <input
