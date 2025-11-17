@@ -1,7 +1,7 @@
   import { useState } from 'react'
   import { useLocation, useNavigate, useParams } from 'react-router-dom'
-  import AudioRecorder from '../components/AudioRecorder'
-  import { saveSong, getSongById } from '../utils/storage'
+  import AudioPlayer from '../components/AudioPlayer'
+  import { saveSong, getSongById, fileToBase64 } from '../utils/storage'
   import styles from './Edit.module.css'
 
   const KEYS = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
@@ -34,12 +34,44 @@
     const [chords, setChords] = useState(initializeChords(song.chords))
     const [selectedMeasure, setSelectedMeasure] = useState(null)
     const [selectedChordIndex, setSelectedChordIndex] = useState(null)
-    const [audioBlob, setAudioBlob] = useState(null)
-    const [audioURL, setAudioURL] = useState(null)
+    const [audioData, setAudioData] = useState(song.audioData || null)
+    const [audioFileName, setAudioFileName] = useState(song.audioFileName || null)
 
-    const handleRecordingComplete = (blob, url) => {
-      setAudioBlob(blob)
-      setAudioURL(url)
+    const handleAudioUpload = async (event) => {
+      const file = event.target.files?.[0]
+      if (!file) return
+
+      // Validate file type
+      if (!file.type.startsWith('audio/')) {
+        alert('音声ファイルを選択してください')
+        return
+      }
+
+      // Validate file size (max 10MB)
+      const maxSize = 10 * 1024 * 1024 // 10MB in bytes
+      if (file.size > maxSize) {
+        alert('ファイルサイズは10MB以下にしてください')
+        return
+      }
+
+      try {
+        const base64Data = await fileToBase64(file)
+        setAudioData(base64Data)
+        setAudioFileName(file.name)
+      } catch (error) {
+        console.error('Error converting file to base64:', error)
+        alert('ファイルの読み込みに失敗しました')
+      }
+    }
+
+    const handleRemoveAudio = () => {
+      setAudioData(null)
+      setAudioFileName(null)
+      // Reset file input
+      const fileInput = document.getElementById('audioFileInput')
+      if (fileInput) {
+        fileInput.value = ''
+      }
     }
 
     const handleMeasureChordSelect = (measureIndex, chordIndex) => {
@@ -85,7 +117,9 @@
         key: selectedKey,
         accidental: selectedAccidental,
         measures: 4,
-        chords: chords
+        chords: chords,
+        audioData: audioData,
+        audioFileName: audioFileName
       }
 
       const success = saveSong(songData)
@@ -207,20 +241,27 @@
 
           <section className={styles.section}>
             <label className={styles.label}>音声ファイル</label>
-            <button className={styles.uploadButton}>
-              ファイルを選択（未実装）
-            </button>
-            <p className={styles.helperText}>
-              ※ 音声アップロード機能は今後実装予定
-            </p>
-          </section>
-
-          <section className={styles.section}>
-            <label className={styles.label}>録音</label>
-            <AudioRecorder
-              onRecordingComplete={handleRecordingComplete}
-              existingAudio={audioURL}
+            <input
+              type="file"
+              id="audioFileInput"
+              accept="audio/*"
+              onChange={handleAudioUpload}
+              style={{ display: 'none' }}
             />
+            <label htmlFor="audioFileInput" className={styles.uploadButton}>
+              ファイルを選択
+            </label>
+            {audioFileName && (
+              <div className={styles.uploadedFile}>
+                <span className={styles.fileName}>{audioFileName}</span>
+                <button className={styles.removeButton} onClick={handleRemoveAudio}>
+                  削除
+                </button>
+              </div>
+            )}
+            <p className={styles.helperText}>
+              対応形式: MP3, WAV, M4A, OGG など（最大10MB）
+            </p>
           </section>
 
           <div className={styles.actionButtons}>
@@ -231,6 +272,12 @@
               キャンセル
             </button>
           </div>
+
+          {audioData && (
+            <section className={styles.section}>
+              <AudioPlayer audioData={audioData} />
+            </section>
+          )}
         </main>
       </div>
     )

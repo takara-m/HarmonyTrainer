@@ -2,6 +2,7 @@
   import { useLocation, useNavigate, useParams, useSearchParams } from 'react-router-dom'
   import { getSongs, getSongById } from '../utils/storage'
   import ResultModal from '../components/ResultModal'
+  import AudioPlayer from '../components/AudioPlayer'
   import styles from './Practice.module.css'
 
   const DEGREES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
@@ -69,10 +70,6 @@
         ...userInput,
         [key]: { ...currentInput, type },
       })
-    }
-
-    const handlePlayMock = () => {
-      alert('音声再生機能（モック実装）')
     }
 
     const getNextSong = () => {
@@ -166,9 +163,6 @@
             )}
           </div>
 
-          <button className={styles.playButton} onClick={handlePlayMock}>
-            ▶ 再生
-          </button>
 
           <section className={styles.section}>
             <h3 className={styles.sectionTitle}>コードを選択</h3>
@@ -235,6 +229,10 @@
           <button className={styles.checkButton} onClick={handleCheckAnswer}>
             答え合わせ
           </button>
+
+        {currentSong.audioData && (
+          <AudioPlayer audioUrl={currentSong.audioData} title={currentSong.title} />
+        )}
         </main>
 
         <ResultModal

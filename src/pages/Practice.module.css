@@ -1,6 +1,8 @@
+/* AudioPlayerのための下部余白 */
 .container {
   min-height: 100vh;
   background-color: #f5f5f5;
+  padding-bottom: 80px;
 }
 
 .header {
