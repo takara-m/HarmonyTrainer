@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c \"rmdir /s /q .expo 2>nul & rmdir /s /q node_modules 2>nul & del /q package-lock.json 2>nul & echo Done\")",
+      "Bash(npm install)",
+      "Bash(npm run dev:*)",
+      "WebSearch",
+      "WebFetch(domain:caniuse.com)",
+      "Bash(taskkill:*)",
+      "Bash(nul)",
+      "Bash(copy:*)",
+      "Bash(pkill:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(dir:*)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

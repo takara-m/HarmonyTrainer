@@ -1,0 +1,408 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 660px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.header {
+  background: linear-gradient(135deg, #6200EE 0%, #3700B3 100%);
+  padding: 1.5rem;
+  border-radius: 16px 16px 0 0;
+}
+
+.title {
+  color: white;
+  font-size: 1.8rem;
+  font-weight: bold;
+  text-align: center;
+  margin: 0;
+}
+
+.content {
+  padding: 1rem 1rem;
+}
+
+.scoreSection {
+      text-align: center;
+      margin-bottom: 1rem;
+}
+
+.scoreCircle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #6200EE 0%, #7C4DFF 100%);
+  color: white;
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  box-shadow: 0 4px 12px rgba(98, 0, 238, 0.3);
+}
+
+.scoreNumber {
+  font-size: 2.5rem;
+}
+
+.scoreDivider {
+  margin: 0 0.25rem;
+}
+
+.scoreTotal {
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+
+.scoreText {
+  font-size: 1.2rem;
+  color: #666;
+  font-weight: 600;
+}
+
+.answersSection {
+      margin-bottom: 1rem;
+}
+
+.sectionTitle {
+    font-size: 1.1rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 0.75rem;
+}
+
+.answersList {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.answerRow {
+  background: #f5f5f5;
+  border-radius: 12px;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.measureLabel {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #666;
+  min-width: 60px;
+}
+
+.answerComparison {
+  flex: 1;
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.answerBox {
+  flex: 1;
+  min-width: 120px;
+  padding: 0.75rem;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.userAnswer {
+  background: #E3F2FD;
+  border: 2px solid #2196F3;
+}
+
+.correctAnswer {
+  background: #E8F5E9;
+  border: 2px solid #4CAF50;
+}
+
+.answerLabel {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #666;
+}
+
+.answerValue {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.resultIcon {
+  font-size: 1.5rem;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.nextButton {
+  width: 100%;
+  background: #6200EE;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.nextButton:hover {
+  background: #7C4DFF;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(98, 0, 238, 0.3);
+}
+
+.nextButton:active {
+  transform: translateY(0);
+}
+
+.continueButton {
+  width: 100%;
+  background: #E1BEE7;
+  color: #4A148C;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.continueButton:hover {
+  background: #CE93D8;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+}
+
+.continueButton:active {
+  transform: translateY(0);
+}
+
+.backButton {
+  width: 100%;
+  background: white;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.backButton:hover {
+  border-color: #999;
+  color: #333;
+}
+
+.backButton:active {
+  transform: scale(0.98);
+}
+
+@media (max-width: 600px) {
+  .modal {
+    margin: 1rem;
+  }
+
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .scoreCircle {
+    width: 100px;
+    height: 100px;
+  }
+
+  .scoreNumber {
+    font-size: 2rem;
+  }
+
+  .scoreTotal {
+    font-size: 1.2rem;
+  }
+
+  .answerRow {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .answerComparison {
+    width: 100%;
+  }
+
+  .answerBox {
+    min-width: 100%;
+  }
+}
+
+/* 小節ごとの答え合わせブロック */
+.measureAnswerBlock {
+  background: #f9f9f9;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
+.measureAnswerBlock .measureLabel {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #6200EE;
+  margin-bottom: 0.75rem;
+  text-align: center;
+}
+
+.chordAnswerRow {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+  background: white;
+  border-radius: 6px;
+}
+
+.chordPosition {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #666;
+  min-width: 80px;
+}
+
+  /* 2×2グリッドレイアウト */
+  .answersGrid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.75rem;
+  }
+
+  .measureCard {
+    background: #f9f9f9;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 0.5rem;
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .measureNumber {
+    background: #6200EE;
+    color: white;
+    border-radius: 6px;
+    padding: 0.5rem 0.25rem;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-align: center;
+    line-height: 1.2;
+    min-width: 30px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .measureContent {
+    flex: 1;
+  }
+
+  .chordsRow {
+    display: flex;
+    gap: 0.5rem;
+  }
+
+  .chordColumn {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    align-items: center;
+  }
+
+  .chordColumn .answerBox {
+    width: 100%;
+    padding: 0.4rem;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    align-items: center;
+  }
+
+  .chordColumn .answerLabel {
+    font-size: 0.7rem;
+    font-weight: 600;
+    color: #666;
+  }
+
+  .chordColumn .answerValue {
+    font-size: 0.95rem;
+    font-weight: bold;
+    color: #333;
+  }
+
+  .chordColumn .resultIcon {
+    font-size: 1.2rem;
+    margin-top: 0.15rem;
+  }
+
+  /* actionsのpaddingを削減 */
+  .actions {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    padding: 0 1rem 1rem;
+  }
+
+  @media (max-width: 600px) {
+    .answersGrid {
+      grid-template-columns: 1fr;
+    }
+
+    .measureNumber {
+      min-width: 25px;
+      font-size: 0.7rem;
+    }
+  }

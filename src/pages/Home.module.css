@@ -1,0 +1,196 @@
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+}
+
+.header {
+  background: linear-gradient(135deg, #6200EE 0%, #3700B3 100%);
+  color: white;
+  padding: 3rem 2rem;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+  font-size: 3rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
+.subtitle {
+  font-size: 1.2rem;
+  opacity: 0.9;
+}
+
+.main {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 3rem 1rem;
+}
+
+.section {
+  margin-bottom: 3rem;
+}
+
+.sectionTitle {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.buttonGroup {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.modeButton {
+  background: white;
+  border: none;
+  border-radius: 16px;
+  padding: 2rem 1.5rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.modeButton:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.modeButton:active {
+  transform: translateY(-2px);
+}
+
+.buttonIcon {
+  font-size: 3rem;
+}
+
+.buttonLabel {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
+}
+
+.buttonDescription {
+  font-size: 0.9rem;
+  color: #666;
+  text-align: center;
+  margin: 0;
+}
+
+.randomButton:hover {
+  background: linear-gradient(135deg, #FF6F00 0%, #FF8F00 100%);
+}
+
+.randomButton:hover .buttonLabel,
+.randomButton:hover .buttonDescription {
+  color: white;
+}
+
+.ascButton:hover {
+  background: linear-gradient(135deg, #6200EE 0%, #7C4DFF 100%);
+}
+
+.ascButton:hover .buttonLabel,
+.ascButton:hover .buttonDescription {
+  color: white;
+}
+
+.descButton:hover {
+  background: linear-gradient(135deg, #03DAC6 0%, #00BFA5 100%);
+}
+
+.descButton:hover .buttonLabel,
+.descButton:hover .buttonDescription {
+  color: white;
+}
+
+.manageButton {
+  width: 100%;
+  background: white;
+  border: 3px solid #6200EE;
+  border-radius: 16px;
+  padding: 2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.manageButton:hover {
+  background: #6200EE;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.manageButton:hover .manageLabel {
+  color: white;
+}
+
+.manageButton:active {
+  transform: translateY(-2px);
+}
+
+.manageIcon {
+  font-size: 2.5rem;
+}
+
+.manageLabel {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #6200EE;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 2.5rem;
+  }
+
+  .subtitle {
+    font-size: 1rem;
+  }
+
+  .main {
+    padding: 2rem 1rem;
+  }
+
+  .sectionTitle {
+    font-size: 1.5rem;
+  }
+
+  .buttonGroup {
+    grid-template-columns: 1fr;
+  }
+
+  .modeButton {
+    padding: 1.5rem;
+  }
+
+  .buttonIcon {
+    font-size: 2.5rem;
+  }
+
+  .buttonLabel {
+    font-size: 1.3rem;
+  }
+
+  .manageIcon {
+    font-size: 2rem;
+  }
+
+  .manageLabel {
+    font-size: 1.5rem;
+  }
+}
