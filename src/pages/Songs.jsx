@@ -82,8 +82,7 @@ function Songs() {
         setRestoreData(backupData)
         setShowRestoreModal(true)
       } catch (error) {
-        alert('バックアップファイルの読み込みに失敗しました:
-' + error.message)
+        alert('バックアップファイルの読み込みに失敗しました:\n' + error.message)
       } finally {
         setIsProcessing(false)
       }
