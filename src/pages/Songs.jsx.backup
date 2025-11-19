@@ -52,7 +52,11 @@ function Songs() {
       const result = backup.downloadBackup(backupData, includeAudio)
 
       if (result.success) {
-        alert(`✓ バックアップを作成しました\n\nファイル: ${result.filename}\nサイズ: ${includeAudio ? backupSize.sizeText : backup.calculateBackupSize(songs, false).sizeText}\n曲数: ${songs.length}曲`)
+        alert(`✓ バックアップを作成しました
+
+ファイル: ${result.filename}
+サイズ: ${includeAudio ? backupSize.sizeText : backup.calculateBackupSize(songs, false).sizeText}
+曲数: ${songs.length}曲`)
         setShowBackupModal(false)
       } else {
         alert('バックアップの作成に失敗しました: ' + result.error)
@@ -92,12 +96,17 @@ function Songs() {
       const result = backup.restoreBackup(restoreData)
 
       if (result.success) {
-        alert(`✓ データを復元しました\n\n曲数: ${result.importedCount}曲\n音声付き: ${result.withAudio}曲`)
+        alert(`✓ データを復元しました
+
+曲数: ${result.importedCount}曲
+音声付き: ${result.withAudio}曲`)
         setShowRestoreModal(false)
         setRestoreData(null)
         loadSongs()
       } else {
-        alert('復元に失敗しました:\n' + (result.errors ? result.errors.join('\n') : result.error))
+        alert('復元に失敗しました:
+' + (result.errors ? result.errors.join('
+') : result.error))
       }
     } catch (error) {
       alert('エラーが発生しました: ' + error.message)

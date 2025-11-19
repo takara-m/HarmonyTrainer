@@ -22,7 +22,10 @@
       "Bash(node -p \"require(''fs'').writeFileSync(''src/pages/Edit.jsx.new'', require(''fs'').readFileSync(''src/pages/Edit.jsx'', ''utf8'').replace(''AudioRecorder'', ''AudioPlayer'').replace(\"\"{ saveSong, getSongById }\"\", \"\"{ saveSong, getSongById, fileToBase64 }\"\").replace(\"\"const [audioBlob, setAudioBlob] = useState(null)\\n  const [audioURL, setAudioURL] = useState(null)\"\", \"\"const [audioData, setAudioData] = useState(song.audioData || null)\\n  const [audioFileName, setAudioFileName] = useState(song.audioFileName || null)\"\"), ''utf8''); ''File partially updated''\")",
       "Bash(awk 'NR==4{print; print \"\"  import AudioPlayer from ''''../components/AudioPlayer''''\"\"; next}1' \"F:/Web app/expo/HarmonyTrainer/src/pages/Practice.jsx\")",
       "Bash(\"F:/Web app/expo/HarmonyTrainer/src/pages/Practice.jsx.tmp\")",
-      "Bash(awk:*)"
+      "Bash(awk:*)",
+      "Bash(npx --yes @babel/parser:*)",
+      "Bash(/dev/null)",
+      "Bash(node -e:*)"
     ],
     "deny": [],
     "ask": []
