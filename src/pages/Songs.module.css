@@ -168,3 +168,237 @@
 .deleteButton:hover {
   background-color: #c82333;
 }
+
+/* バックアップ/復元 */
+.backupRestoreContainer {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.backupButton {
+  flex: 1;
+  background: linear-gradient(135deg, #FF9800 0%, #F57C00 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(255, 152, 0, 0.3);
+}
+
+.backupButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(255, 152, 0, 0.4);
+}
+
+.backupButton:active {
+  transform: translateY(0);
+}
+
+.restoreButton {
+  flex: 1;
+  background: linear-gradient(135deg, #2196F3 0%, #1976D2 100%);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 12px rgba(33, 150, 243, 0.3);
+}
+
+.restoreButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(33, 150, 243, 0.4);
+}
+
+.restoreButton:active {
+  transform: translateY(0);
+}
+
+/* モーダル */
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.modal {
+  background: white;
+  border-radius: 16px;
+  max-width: 500px;
+  width: 100%;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s ease-out;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modalTitle {
+  background: linear-gradient(135deg, #6200EE 0%, #3700B3 100%);
+  color: white;
+  padding: 1.5rem;
+  border-radius: 16px 16px 0 0;
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: bold;
+}
+
+.modalContent {
+  padding: 1.5rem;
+}
+
+.modalContent p {
+  margin: 0.5rem 0;
+  color: #333;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+.warningText {
+  color: #f44336;
+  font-weight: 600;
+  margin-top: 0.75rem;
+}
+
+.modalActions {
+  display: flex;
+  gap: 0.75rem;
+  padding: 0 1.5rem 1.5rem;
+}
+
+.cancelButton {
+  flex: 1;
+  background: white;
+  color: #666;
+  border: 2px solid #e0e0e0;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.cancelButton:hover {
+  border-color: #999;
+  color: #333;
+}
+
+.confirmButton {
+  flex: 1;
+  background: #6200EE;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.confirmButton:hover {
+  background: #7C4DFF;
+}
+
+.confirmButton:disabled {
+  background: #9E9E9E;
+  cursor: not-allowed;
+}
+
+/* ローディング */
+.loadingOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  color: white;
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loadingOverlay p {
+  margin-top: 1rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+@media (max-width: 600px) {
+  .backupRestoreContainer {
+    flex-direction: column;
+  }
+
+  .modal {
+    margin: 1rem;
+  }
+
+  .modalTitle {
+    font-size: 1.1rem;
+    padding: 1.25rem;
+  }
+
+  .modalContent {
+    padding: 1.25rem;
+  }
+
+  .modalActions {
+    padding: 0 1.25rem 1.25rem;
+  }
+}
