@@ -7,15 +7,23 @@
   const KEYS = ['C', 'D', 'E', 'F', 'G', 'A', 'B']
   const ACCIDENTALS = ['', '♭', '♯']
   const DEGREES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
+  const DEGREE_ACCIDENTALS = ['', '♭', '♯']
   const CHORD_TYPES = ['', 'm', '7', 'm7', 'maj7', 'dim', 'aug']
 
   const initializeChords = (existingChords) => {
     if (existingChords && existingChords.length === 4) {
-      return existingChords
+      // 既存のコードにdegreeAccidentalフィールドを追加（互換性のため）
+      return existingChords.map(measure =>
+        measure.map(chord => ({
+          degree: chord.degree || '',
+          degreeAccidental: chord.degreeAccidental || '',
+          type: chord.type || ''
+        }))
+      )
     }
     return Array(4).fill(null).map(() => [
-      { degree: '', type: '' },
-      { degree: '', type: '' }
+      { degree: '', degreeAccidental: '', type: '' },
+      { degree: '', degreeAccidental: '', type: '' }
     ])
   }
 
@@ -36,6 +44,7 @@
     const [selectedChordIndex, setSelectedChordIndex] = useState(null)
     const [audioData, setAudioData] = useState(song.audioData || null)
     const [audioFileName, setAudioFileName] = useState(song.audioFileName || null)
+    const [notes, setNotes] = useState(song.notes || '')
 
     const handleAudioUpload = async (event) => {
       const file = event.target.files?.[0]
@@ -86,7 +95,18 @@
       }
       const newChords = [...chords]
       const currentChord = newChords[selectedMeasure][selectedChordIndex]
-      newChords[selectedMeasure][selectedChordIndex] = { ...currentChord, degree }
+      newChords[selectedMeasure][selectedChordIndex] = { ...currentChord, degree, degreeAccidental: '' }
+      setChords(newChords)
+    }
+
+    const handleDegreeAccidentalSelect = (accidental) => {
+      if (selectedMeasure === null || selectedChordIndex === null) {
+        alert('先に小節内のコード位置を選択してください')
+        return
+      }
+      const newChords = [...chords]
+      const currentChord = newChords[selectedMeasure][selectedChordIndex]
+      newChords[selectedMeasure][selectedChordIndex] = { ...currentChord, degreeAccidental: accidental }
       setChords(newChords)
     }
 
@@ -119,7 +139,8 @@
         measures: 4,
         chords: chords,
         audioData: audioData,
-        audioFileName: audioFileName
+        audioFileName: audioFileName,
+        notes: notes
       }
 
       const success = saveSong(songData)
@@ -189,7 +210,7 @@
                   <div className={styles.measureLabel}>{measureIndex + 1}小節目</div>
                   <div className={styles.chordPairRow}>
                     {measure.map((chord, chordIndex) => {
-                      const displayText = chord.degree ? chord.degree + chord.type : '?'
+                      const displayText = chord.degree ? chord.degree + (chord.degreeAccidental || '') + chord.type : '?'
                       const isSelected = selectedMeasure === measureIndex && selectedChordIndex === chordIndex
 
                       return (
@@ -219,6 +240,17 @@
                   onClick={() => handleDegreeSelect(degree)}
                 >
                   {degree}
+                </button>
+              ))}
+            </div>
+            <div className={styles.accidentalRow}>
+              {DEGREE_ACCIDENTALS.map((acc) => (
+                <button
+                  key={acc || 'natural'}
+                  className={`${styles.accidentalButton} ${selectedMeasure !== null && selectedChordIndex !== null && chords[selectedMeasure][selectedChordIndex].degreeAccidental === acc ? styles.accidentalButtonSelected : ''}`}
+                  onClick={() => handleDegreeAccidentalSelect(acc)}
+                >
+                  {acc || 'ナ'}
                 </button>
               ))}
             </div>
@@ -262,6 +294,20 @@
             <p className={styles.helperText}>
               対応形式: MP3, WAV, M4A, OGG など（最大10MB）
             </p>
+
+          <section className={styles.section}>
+            <label className={styles.label}>メモ・注釈</label>
+            <textarea
+              className={styles.textarea}
+              value={notes}
+              onChange={(e) => setNotes(e.target.value)}
+              placeholder="この曲についてのメモや練習のポイントを入力..."
+              rows={4}
+            />
+            <p className={styles.helperText}>
+              練習のポイントや気づいたことなどを自由に記入できます
+            </p>
+          </section>
           </section>
 
           <div className={styles.actionButtons}>

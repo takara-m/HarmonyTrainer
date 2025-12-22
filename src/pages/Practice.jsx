@@ -6,6 +6,7 @@
   import styles from './Practice.module.css'
 
   const DEGREES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
+  const DEGREE_ACCIDENTALS = ['', '♭', '♯']
   const CHORD_TYPES = ['', 'm', '7', 'm7', 'maj7', 'dim', 'aug']
 
   function Practice() {
@@ -35,6 +36,8 @@
       setSelectedChordIndex(null)
       setUserInput({})
       setShowModal(false)
+      // 確実にスクロールリセット
+      window.scrollTo(0, 0)
     }, [id, location.state?.song])
 
     const handleMeasureChordSelect = (measureIndex, chordIndex) => {
@@ -48,10 +51,23 @@
         return
       }
       const key = selectedMeasure + '-' + selectedChordIndex
-      const currentInput = userInput[key] || { degree: '', type: '' }
+      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '' }
       setUserInput({
         ...userInput,
-        [key]: { ...currentInput, degree },
+        [key]: { ...currentInput, degree, degreeAccidental: '' },
+      })
+    }
+
+    const handleDegreeAccidentalSelect = (accidental) => {
+      if (selectedMeasure === null || selectedChordIndex === null) {
+        alert('先に小節内のコード位置を選択してください')
+        return
+      }
+      const key = selectedMeasure + '-' + selectedChordIndex
+      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '' }
+      setUserInput({
+        ...userInput,
+        [key]: { ...currentInput, degreeAccidental: accidental },
       })
     }
 
@@ -175,7 +191,7 @@
                       const key = measureIndex + '-' + chordIndex
                       const input = userInput[key]
                       const displayText = input && input.degree
-                        ? input.degree + input.type
+                        ? input.degree + (input.degreeAccidental || '') + input.type
                         : '?'
                       const isSelected = selectedMeasure === measureIndex && selectedChordIndex === chordIndex
 
@@ -206,6 +222,17 @@
                   onClick={() => handleDegreeSelect(degree)}
                 >
                   {degree}
+                </button>
+              ))}
+            </div>
+            <div className={styles.accidentalRow}>
+              {DEGREE_ACCIDENTALS.map((acc) => (
+                <button
+                  key={acc || 'natural'}
+                  className={`${styles.accidentalButton} ${selectedMeasure !== null && selectedChordIndex !== null && (userInput[selectedMeasure + '-' + selectedChordIndex]?.degreeAccidental === acc) ? styles.accidentalButtonSelected : ''}`}
+                  onClick={() => handleDegreeAccidentalSelect(acc)}
+                >
+                  {acc || 'ナ'}
                 </button>
               ))}
             </div>

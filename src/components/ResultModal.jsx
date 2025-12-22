@@ -26,7 +26,7 @@
           if (!user || user.degree === 'ー' || !user.degree) {
             correctCount++
           }
-        } else if (user && user.degree === correct.degree && user.type === correct.type) {
+        } else if (user && user.degree === correct.degree && user.type === correct.type && (user.degreeAccidental || '') === (correct.degreeAccidental || '')) {
           correctCount++
         }
       })
@@ -78,13 +78,11 @@
                             if (correct.degree === 'ー') {
                               isCorrect = !user || user.degree === 'ー' || !user.degree
                             } else {
-                              isCorrect = user && user.degree === correct.degree && user.type === correct.type
+                              isCorrect = user && user.degree === correct.degree && user.type === correct.type && (user.degreeAccidental || '') === (correct.degreeAccidental || '')
                             }
 
-                            const correctDisplay = correct.degree === 'ー' ? '（空）' : correct.degree +
-  correct.type
-                            const userDisplay = !user || user.degree === 'ー' || !user.degree ? '（空）' :
-  user.degree + user.type
+                            const correctDisplay = correct.degree === 'ー' ? '（空）' : correct.degree + (correct.degreeAccidental || '') + correct.type
+                            const userDisplay = !user || user.degree === 'ー' || !user.degree ? '（空）' : user.degree + (user.degreeAccidental || '') + user.type
 
                             return (
                               <div key={chordIndex} className={styles.chordColumn}>
