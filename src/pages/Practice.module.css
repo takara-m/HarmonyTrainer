@@ -67,6 +67,12 @@
   margin-top: 0.5rem;
 }
 
+/* 五線譜画像コンテナ */
+.staffNotationContainer {
+  margin-top: 1.5rem;
+  margin-bottom: 1rem;
+}
+
 .playButton {
   width: 100%;
   background-color: #6200EE;

@@ -3,6 +3,7 @@
   import { getSongs, getSongById } from '../utils/storage'
   import ResultModal from '../components/ResultModal'
   import AudioPlayer from '../components/AudioPlayer'
+import StaffNotationImage from '../components/StaffNotationImage'
   import styles from './Practice.module.css'
 
   const DEGREES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
@@ -172,6 +173,15 @@
           <div className={styles.songInfoCard}>
             <h2 className={styles.songTitle}>{currentSong.title}</h2>
             <p className={styles.keyInfo}>キー: {currentSong.key}{currentSong.accidental || ''}</p>
+
+            {/* 五線譜画像を表示 */}
+            <div className={styles.staffNotationContainer}>
+              <StaffNotationImage
+                keyName={currentSong.key}
+                accidental={currentSong.accidental || ''}
+              />
+            </div>
+
             {mode && (
               <p className={styles.modeInfo}>
                 モード: {mode === 'random' ? 'ランダム' : mode === 'asc' ? '昇順' : '降順'}
