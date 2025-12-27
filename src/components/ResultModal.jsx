@@ -26,7 +26,7 @@
           if (!user || user.degree === 'ー' || !user.degree) {
             correctCount++
           }
-        } else if (user && user.degree === correct.degree && user.type === correct.type && (user.degreeAccidental || '') === (correct.degreeAccidental || '')) {
+        } else if (user && user.degree === correct.degree && user.type === correct.type && (user.degreeAccidental || '') === (correct.degreeAccidental || '') && (user.slashBass || '') === (correct.slashBass || '')) {
           correctCount++
         }
       })
@@ -78,11 +78,11 @@
                             if (correct.degree === 'ー') {
                               isCorrect = !user || user.degree === 'ー' || !user.degree
                             } else {
-                              isCorrect = user && user.degree === correct.degree && user.type === correct.type && (user.degreeAccidental || '') === (correct.degreeAccidental || '')
+                              isCorrect = user && user.degree === correct.degree && user.type === correct.type && (user.degreeAccidental || '') === (correct.degreeAccidental || '') && (user.slashBass || '') === (correct.slashBass || '')
                             }
 
-                            const correctDisplay = correct.degree === 'ー' ? '（空）' : correct.degree + (correct.degreeAccidental || '') + correct.type
-                            const userDisplay = !user || user.degree === 'ー' || !user.degree ? '（空）' : user.degree + (user.degreeAccidental || '') + user.type
+                            const correctDisplay = correct.degree === 'ー' ? '（空）' : correct.degree + (correct.degreeAccidental || '') + correct.type + (correct.slashBass ? '/' + correct.slashBass : '')
+                            const userDisplay = !user || user.degree === 'ー' || !user.degree ? '（空）' : user.degree + (user.degreeAccidental || '') + user.type + (user.slashBass ? '/' + user.slashBass : '')
 
                             return (
                               <div key={chordIndex} className={styles.chordColumn}>

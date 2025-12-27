@@ -9,6 +9,7 @@ import StaffNotationImage from '../components/StaffNotationImage'
   const DEGREES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
   const DEGREE_ACCIDENTALS = ['', '♭', '♯']
   const CHORD_TYPES = ['', 'm', '7', 'm7', 'maj7', 'dim', 'aug']
+  const SLASH_BASS_NOTES = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
 
   function Practice() {
     const { id } = useParams()
@@ -52,7 +53,7 @@ import StaffNotationImage from '../components/StaffNotationImage'
         return
       }
       const key = selectedMeasure + '-' + selectedChordIndex
-      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '' }
+      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '', slashBass: '' }
       setUserInput({
         ...userInput,
         [key]: { ...currentInput, degree, degreeAccidental: '' },
@@ -65,7 +66,7 @@ import StaffNotationImage from '../components/StaffNotationImage'
         return
       }
       const key = selectedMeasure + '-' + selectedChordIndex
-      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '' }
+      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '', slashBass: '' }
       setUserInput({
         ...userInput,
         [key]: { ...currentInput, degreeAccidental: accidental },
@@ -78,7 +79,7 @@ import StaffNotationImage from '../components/StaffNotationImage'
         return
       }
       const key = selectedMeasure + '-' + selectedChordIndex
-      const currentInput = userInput[key] || { degree: '', type: '' }
+      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '', slashBass: '' }
       if (!currentInput.degree) {
         alert('先に度数を選択してください')
         return
@@ -86,6 +87,21 @@ import StaffNotationImage from '../components/StaffNotationImage'
       setUserInput({
         ...userInput,
         [key]: { ...currentInput, type },
+      })
+    }
+
+    const handleSlashBassSelect = (bass) => {
+      if (selectedMeasure === null || selectedChordIndex === null) {
+        return
+      }
+      const key = selectedMeasure + '-' + selectedChordIndex
+      const currentInput = userInput[key] || { degree: '', degreeAccidental: '', type: '', slashBass: '' }
+      if (!currentInput.degree) {
+        return
+      }
+      setUserInput({
+        ...userInput,
+        [key]: { ...currentInput, slashBass: bass },
       })
     }
 
@@ -201,7 +217,7 @@ import StaffNotationImage from '../components/StaffNotationImage'
                       const key = measureIndex + '-' + chordIndex
                       const input = userInput[key]
                       const displayText = input && input.degree
-                        ? input.degree + (input.degreeAccidental || '') + input.type
+                        ? input.degree + (input.degreeAccidental || '') + input.type + (input.slashBass ? '/' + input.slashBass : '')
                         : '?'
                       const isSelected = selectedMeasure === measureIndex && selectedChordIndex === chordIndex
 
@@ -258,6 +274,21 @@ import StaffNotationImage from '../components/StaffNotationImage'
                   onClick={() => handleTypeSelect(type)}
                 >
                   {type || 'メジャー'}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>分数コード（オプション）</h3>
+            <div className={styles.slashBassRow}>
+              {SLASH_BASS_NOTES.map((bass) => (
+                <button
+                  key={bass || 'none'}
+                  className={styles.slashBassButton}
+                  onClick={() => handleSlashBassSelect(bass)}
+                >
+                  {bass || 'なし'}
                 </button>
               ))}
             </div>

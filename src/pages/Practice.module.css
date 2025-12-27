@@ -196,6 +196,32 @@
   transform: scale(0.95);
 }
 
+/* 分数コード選択ボタン */
+.slashBassRow {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.slashBassButton {
+  background-color: #03DAC6;
+  color: #000;
+  padding: 0.6rem 0.9rem;
+  border-radius: 8px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  min-width: 60px;
+  transition: opacity 0.2s, transform 0.1s;
+}
+
+.slashBassButton:hover {
+  opacity: 0.9;
+}
+
+.slashBassButton:active {
+  transform: scale(0.95);
+}
+
 .checkButton {
   width: 100%;
   background-color: #FF6F00;

@@ -9,6 +9,7 @@
   const DEGREES = ['I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
   const DEGREE_ACCIDENTALS = ['', '♭', '♯']
   const CHORD_TYPES = ['', 'm', '7', 'm7', 'maj7', 'dim', 'aug']
+  const SLASH_BASS_NOTES = ['', 'I', 'II', 'III', 'IV', 'V', 'VI', 'VII']
 
   const initializeChords = (existingChords) => {
     if (existingChords && existingChords.length === 4) {
@@ -17,13 +18,14 @@
         measure.map(chord => ({
           degree: chord.degree || '',
           degreeAccidental: chord.degreeAccidental || '',
-          type: chord.type || ''
+          type: chord.type || '',
+          slashBass: chord.slashBass || ''
         }))
       )
     }
     return Array(4).fill(null).map(() => [
-      { degree: '', degreeAccidental: '', type: '' },
-      { degree: '', degreeAccidental: '', type: '' }
+      { degree: '', degreeAccidental: '', type: '', slashBass: '' },
+      { degree: '', degreeAccidental: '', type: '', slashBass: '' }
     ])
   }
 
@@ -125,6 +127,21 @@
       setChords(newChords)
     }
 
+    const handleSlashBassSelect = (bass) => {
+      if (selectedMeasure === null || selectedChordIndex === null) {
+        alert('先に小節内のコード位置を選択してください')
+        return
+      }
+      const currentChord = chords[selectedMeasure][selectedChordIndex]
+      if (!currentChord.degree) {
+        alert('先に度数を選択してください')
+        return
+      }
+      const newChords = [...chords]
+      newChords[selectedMeasure][selectedChordIndex] = { ...currentChord, slashBass: bass }
+      setChords(newChords)
+    }
+
     const handleSave = () => {
       if (!title.trim()) {
         alert('曲名を入力してください')
@@ -210,7 +227,7 @@
                   <div className={styles.measureLabel}>{measureIndex + 1}小節目</div>
                   <div className={styles.chordPairRow}>
                     {measure.map((chord, chordIndex) => {
-                      const displayText = chord.degree ? chord.degree + (chord.degreeAccidental || '') + chord.type : '?'
+                      const displayText = chord.degree ? chord.degree + (chord.degreeAccidental || '') + chord.type + (chord.slashBass ? '/' + chord.slashBass : '') : '?'
                       const isSelected = selectedMeasure === measureIndex && selectedChordIndex === chordIndex
 
                       return (
@@ -266,6 +283,21 @@
                   onClick={() => handleTypeSelect(type)}
                 >
                   {type || 'メジャー'}
+                </button>
+              ))}
+            </div>
+          </section>
+
+          <section className={styles.section}>
+            <h3 className={styles.sectionTitle}>分数コード（オプション）</h3>
+            <div className={styles.slashBassRow}>
+              {SLASH_BASS_NOTES.map((bass) => (
+                <button
+                  key={bass || 'none'}
+                  className={styles.slashBassButton}
+                  onClick={() => handleSlashBassSelect(bass)}
+                >
+                  {bass || 'なし'}
                 </button>
               ))}
             </div>
